@@ -481,7 +481,7 @@
       <div style="background: #D6ECF9; padding: 40px">
         <h2 style="margin: 0 0 8px; font-size: 26px; font-weight: 400">Оставьте заявку</h2>
         <p style="margin: 0 0 28px; font-size: 14px; color: #6E7C85">Опишите задачу — перезвоню и скажу, что потребуется и сколько это будет стоить.</p>
-        <form action="https://api.web3forms.com/submit" method="POST" style="display: flex; flex-direction: column; gap: 16px">
+        <form action="https://api.web3forms.com/submit" method="POST" style="display: flex; flex-direction: column; gap: 16px" name="contact" netlify>
           <input type="hidden" name="access_key" value="ВСТАВЬТЕ-ACCESS-KEY-WEB3FORMS" />
           <input type="hidden" name="subject" value="Заявка с сайта ИП Булаева" />
           <input type="checkbox" name="botcheck" style="display: none" />
@@ -493,7 +493,6 @@
             <span>Согласен на обработку персональных данных в соответствии с <a href="#policy" onClick="{{ goPolicy }}">политикой обработки персональных данных</a></span>
           </label>
           <button type="submit" style="align-self: center; border: none; background: #F98307; color: #ffffff; font-size: 17px; font-family: inherit; padding: 14px clamp(18px, 4vw, 32px); cursor: pointer" style-hover="background: #d46f02">Отправить</button>
-
         </form>
       </div>
     </div>
