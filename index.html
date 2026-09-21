@@ -22,18 +22,57 @@
   p { text-wrap: pretty; }
 </style>
 </helmet>
-
-<div style="width: 100%; overflow-x: hidden">
-
-  <header style="position: sticky; top: 0; z-index: 20; background: #ffffff; borderBottom: 1px solid #EDF4F8">
-    <div style="maxWidth: 1120px; margin: 0 auto; padding: 20px clamp(18px, 4vw, 32px); display: flex; align-items: center; gap: 40px">
+  <header style="position: sticky; top: 0; z-index: 20; background: #ffffff; border-bottom: 1px solid #EDF4F8">
+    <style>
+      .burger-toggle { display: none; }
+      .burger-icon { display: none; cursor: pointer; padding: 8px; }
+      .burger-icon span { display: block; width: 24px; height: 2px; background: #1D1D1B; margin: 5px 0; transition: 0.3s; }
+      .header-inner { max-width: 1120px; margin: 0 auto; padding: 20px clamp(18px, 4vw, 32px); display: flex; align-items: center; gap: 40px; }
+      .header-nav { display: flex; align-items: center; gap: 28px; flex: 1; }
+      .header-phone { font-size: 14px; color: #F98307; white-space: nowrap; }
+      
+      @media (max-width: 720px) {
+        .header-inner { gap: 16px; flex-wrap: nowrap; }
+        .burger-icon { display: block; margin-left: auto; }
+        .header-nav {
+          position: absolute;
+          top: 100%;
+          left: 0;
+          right: 0;
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 0;
+          background: #ffffff;
+          border-bottom: 1px solid #EDF4F8;
+          max-height: 0;
+          overflow: hidden;
+          transition: max-height 0.3s ease;
+        }
+        .header-nav > * { padding: 16px 24px; width: 100%; border-top: 1px solid #EDF4F8; }
+        .burger-toggle:checked ~ .header-nav { max-height: 400px; }
+        .burger-toggle:checked ~ .burger-icon span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+        .burger-toggle:checked ~ .burger-icon span:nth-child(2) { opacity: 0; }
+        .burger-toggle:checked ~ .burger-icon span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+      }
+    </style>
+    
+    <div class="header-inner" style="position: relative">
       <div onClick="{{ goHome }}" style="font-size: 22px; font-weight: 600; letter-spacing: -0.01em; cursor: pointer; white-space: nowrap">ИП<span style="color: #F98307">Булаева</span></div>
-      <nav style="display: flex; align-items: center; gap: 28px; flex-wrap: wrap; flex: 1">
+      
+      <input type="checkbox" id="burger-toggle" class="burger-toggle" />
+      <label for="burger-toggle" class="burger-icon">
+        <span></span>
+        <span></span>
+        <span></span>
+      </label>
+      
+      <nav class="header-nav">
         <sc-for list="{{ nav }}" as="item" hint-placeholder-count="4">
           <div onClick="{{ item.go }}" style="font-size: 15px; cursor: pointer; padding-bottom: 2px; color: {{ item.color }}; border-bottom: 2px solid {{ item.rule }}">{{ item.label }}</div>
         </sc-for>
       </nav>
-      <a href="tel:+79111016915" style="font-size: 14px; color: #F98307; white-space: nowrap">7 (911) 101 69 15</a>
+      
+      <a href="tel:+79111016915" class="header-phone">7 (911) 101 69 15</a>
     </div>
   </header>
 
@@ -60,9 +99,8 @@
         </div>
         <a href="#contacts" style="display: inline-block; background: #F98307; color: #ffffff; font-size: 19px; padding: 14px 30px" style-hover="background: #d46f02; color: #ffffff">Заказать услугу</a>
       </div>
-      <div style="background: #8FCBE5; aspect-ratio: 16 / 11; display: flex; align-items: flex-end; justify-content: center; padding: 16px; background-image: repeating-linear-gradient(135deg, rgba(255,255,255,0.22) 0 8px, transparent 8px 16px)">
-        <span style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: #124055; background: rgba(255,255,255,0.85); padding: 5px 9px">фото: бухгалтер за рабочим столом</span>
-      </div>
+      <img src="photos/main-hero.jpg" alt="Наталья Булаева, бухгалтер" 
+     style="width: 100%; aspect-ratio: 16 / 11; object-fit: cover; display: block" />
     </section>
 
     <div style="display: flex; justify-content: center; padding: 40px 0 72px">
@@ -127,9 +165,8 @@
         <div style="grid-column: 1 / -1">
           <h2 style="margin: 0; font-size: clamp(27px, 4.4vw, 38px); font-weight: 400; line-height: 1.15"><span style="color: #F98307">Основные</span> бухгалтерские услуги</h2>
         </div>
-        <div style="background: #B9D9EC; aspect-ratio: 4 / 5; display: flex; align-items: flex-end; padding: 14px; background-image: repeating-linear-gradient(135deg, rgba(255,255,255,0.25) 0 8px, transparent 8px 16px)">
-          <span style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: #124055; background: rgba(255,255,255,0.85); padding: 5px 9px">фото: работа с документами</span>
-        </div>
+        <img src="photos/uslugi-1.jpg" alt="Работа с документами" 
+     style="width: 100%; aspect-ratio: 4 / 5; object-fit: cover; display: block" />
         <div style="display: flex; flex-direction: column; gap: 26px; padding-top: 8px">
           <div style="display: flex; gap: 18px; align-items: center">
             <svg width="16" height="18" viewBox="0 0 16 18" style="flex: none"><path d="M2 2l12 7-12 7z" fill="none" stroke="#F98307" stroke-width="1.6" /></svg>
@@ -211,7 +248,8 @@
     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 28px">
       <div style="background: #D6ECF9; padding: clamp(18px, 4vw, 32px)">
         <div style="display: flex; gap: 22px; align-items: center; margin-bottom: 22px">
-          <div style="flex: none; width: 82px; height: 82px; border-radius: 50%; background: #B9D9EC; background-image: repeating-linear-gradient(135deg, rgba(255,255,255,0.3) 0 6px, transparent 6px 12px)"></div>
+          <img src="photos/review-hero-1.jpg" alt="Сергей Иванов" 
+     style="flex: none; width: 82px; height: 82px; border-radius: 50%; object-fit: cover" />
           <div>
             <div style="font-size: 20px">Имя клиента</div>
             <div style="margin-top: 4px; font-size: 13px; color: #7C8A93">компания, должность</div>
@@ -227,7 +265,8 @@
       </div>
       <div style="background: #D6ECF9; padding: clamp(18px, 4vw, 32px)">
         <div style="display: flex; gap: 22px; align-items: center; margin-bottom: 22px">
-          <div style="flex: none; width: 82px; height: 82px; border-radius: 50%; background: #B9D9EC; background-image: repeating-linear-gradient(135deg, rgba(255,255,255,0.3) 0 6px, transparent 6px 12px)"></div>
+          <img src="photos/review-hero-2.jpg" alt="Сергей Иванов" 
+     style="flex: none; width: 82px; height: 82px; border-radius: 50%; object-fit: cover" />
           <div>
             <div style="font-size: 20px">Имя клиента</div>
             <div style="margin-top: 4px; font-size: 13px; color: #7C8A93">компания, должность</div>
@@ -252,9 +291,8 @@
     <section style="background: #D6ECF9; padding: 56px 0 0">
       <div style="maxWidth: 1120px; margin: 0 auto; padding: 0 clamp(18px, 4vw, 32px); display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: clamp(18px, 4vw, 32px); align-items: start">
         <h1 style="margin: 0; font-size: clamp(32px, 5.4vw, 46px); font-weight: 400; line-height: 1.12">Бухгалтерское<br />обслуживание</h1>
-        <div style="background: #B9D9EC; aspect-ratio: 16 / 10; display: flex; align-items: flex-end; padding: 14px; background-image: repeating-linear-gradient(135deg, rgba(255,255,255,0.28) 0 8px, transparent 8px 16px)">
-          <span style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: #124055; background: rgba(255,255,255,0.85); padding: 5px 9px">фото: бухгалтер, вырезанный фон</span>
-        </div>
+        <img src="photos/uslugi-2.jpg" alt="Бухгалтерское обслуживание" 
+     style="width: 100%; aspect-ratio: 16 / 10; object-fit: cover; display: block" />
       </div>
       <div style="maxWidth: 1120px; margin: 0 auto; padding: 0 clamp(18px, 4vw, 32px)">
         <div style="background: #FBFCFD; border-radius: 26px; margin-top: clamp(18px, 4vw, 32px); padding: clamp(22px, 4vw, 40px) clamp(20px, 4vw, 48px) clamp(30px, 5vw, 56px)">
@@ -307,9 +345,8 @@
         <h1 style="margin: 0 0 22px; font-size: clamp(30px, 5vw, 42px); font-weight: 400; line-height: 1.12">Восстановление<br />Учета</h1>
         <p style="margin: 0; font-size: 16px; line-height: 1.6">Восстановлю бухгалтерский учёт — приведу данные в соответствие с <span style="color: #F98307">реальными операциями</span> и <span style="color: #F98307">вашими первичными документами</span>.</p>
       </div>
-      <div style="align-self: stretch; background: #B9D9EC; min-height: 300px; display: flex; align-items: flex-end; padding: 14px; background-image: repeating-linear-gradient(135deg, rgba(255,255,255,0.28) 0 8px, transparent 8px 16px)">
-        <span style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: #124055; background: rgba(255,255,255,0.85); padding: 5px 9px">фото: работа с первичными документами</span>
-      </div>
+      <img src="photos/recovery-hero.jpg" alt="Восстановление учёта" 
+     style="align-self: stretch; width: 100%; min-height: 300px; object-fit: cover; display: block" />
     </section>
 
     <h2 style="margin: 80px 0 44px; font-size: clamp(27px, 4.4vw, 38px); font-weight: 400">Как я буду восстанавливать учет?</h2>
@@ -411,9 +448,8 @@
   <main style="maxWidth: 1120px; margin: 0 auto; padding: 56px clamp(18px, 4vw, 32px) 0">
     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 48px; align-items: start">
       <div>
-        <div style="background: #E2E2E2; aspect-ratio: 1 / 1; display: flex; align-items: flex-end; padding: 14px; background-image: repeating-linear-gradient(135deg, rgba(255,255,255,0.5) 0 8px, transparent 8px 16px)">
-          <span style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: #4A4A48; background: rgba(255,255,255,0.85); padding: 5px 9px">портрет: Булаева Наталья</span>
-        </div>
+        <img src="photos/recovery-hero.jpg" alt="Наталья Булаева" 
+     style="width: 100%; aspect-ratio: 1 / 1; object-fit: cover; display: block" />
         <div style="display: flex; gap: 18px; margin: 22px 0 56px">
           <div style="width: 22px; height: 22px; border-radius: 50%; border: 3px solid #F98307"></div>
           <div style="width: 22px; height: 22px; border-radius: 50%; border: 3px solid #F98307"></div>
@@ -535,19 +571,6 @@
       <div>
         <svg width="52" height="52" viewBox="0 0 52 52"><circle cx="26" cy="26" r="8" fill="none" stroke="#F98307" stroke-width="2.6" /><path d="M26 6v8M26 38v8M6 26h8M38 26h8M12 12l6 6M34 34l6 6M40 12l-6 6M18 34l-6 6" stroke="#F98307" stroke-width="2.6" /></svg>
         <div style="margin-top: 12px; font-size: 15px">Начнем работу</div>
-      </div>
-    </div>
-    <div style="display: flex; align-items: flex-start; gap: 24px; margin: 40px 0 0">
-      <svg width="120" height="120" viewBox="0 0 120 120" style="flex: none"><path d="M20 4C20 60 40 80 66 96" fill="none" stroke="#2BA3C9" stroke-width="2.4" /><path d="M58 88l10 10-14 3" fill="#2BA3C9" /></svg>
-      <div style="display: flex; flex-direction: column; gap: 12px; padding-top: 84px">
-        <div style="display: flex; align-items: center; gap: 16px">
-          <svg width="24" height="24" viewBox="0 0 24 24" style="flex: none"><path d="M6 3l4 5-2.5 2.5c1.3 3 3.5 5 6.5 6.2L16.5 14l5 4-2.5 3.5C11.5 20.5 5 14 3.5 6L6 3z" fill="none" stroke="#F98307" stroke-width="1.6" /></svg>
-          <a href="tel:+79111016915" style="font-size: 24px; color: #1D1D1B" style-hover="color: #F98307">7 (911) 101 69 15</a>
-        </div>
-        <div style="display: flex; align-items: center; gap: 16px">
-          <svg width="24" height="24" viewBox="0 0 24 24" style="flex: none"><rect x="2" y="5" width="20" height="14" fill="none" stroke="#F98307" stroke-width="1.6" /><path d="M2 6l10 7 10-7" fill="none" stroke="#F98307" stroke-width="1.6" /></svg>
-          <a href="mailto:baluevanasty@gmail.com" style="font-size: 24px; color: #1D1D1B" style-hover="color: #F98307">baluevanasty@gmail.com</a>
-        </div>
       </div>
     </div>
   </section>
